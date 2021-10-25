@@ -110,7 +110,7 @@ if (!(Test-Path $antrea_helper)) {
 }
 Import-Module $antrea_helper
 
-& Install-AntreaAgent -KubernetesVersion "v$KubernetesVersion" -KubernetesHome "c:/k" -KubeConfig "C:/etc/kubernetes/kubelet.conf" -AntreaVersion "v0.13.2" -AntreaHome "c:/k/antrea"
+& Install-AntreaAgent -KubernetesVersion "v$KubernetesVersion" -KubernetesHome "c:/k" -KubeConfig "C:/etc/kubernetes/kubelet.conf" -AntreaVersion "v1.2.3" -AntreaHome "c:/k/antrea"
 New-KubeProxyServiceInterface
 
 ### Installing Kube-Proxy
@@ -119,15 +119,15 @@ New-KubeProxyServiceInterface
 
 $nssm = (Get-Command nssm).Source
 & $nssm set Kubelet start SERVICE_AUTO_START
-# & nssm install kube-proxy "C:/k/kube-proxy.exe" "--proxy-mode=userspace --kubeconfig=$KubeProxyConfig --log-dir=c:/var/log/kube-proxy --logtostderr=false --alsologtostderr"
+& nssm install kube-proxy "C:/k/kube-proxy.exe" "--proxy-mode=userspace --kubeconfig=$KubeProxyConfig --log-dir=c:/var/log/kube-proxy --logtostderr=false --alsologtostderr"
 
-& nssm install antrea-agent "C:/k/antrea/bin/antrea-agent.exe" "--config=C:/k/antrea/etc/antrea-agent.conf --logtostder=false --log_dir=c:/var/log/antrea --alsologtostderr --log_file_max_size=100 --log_file_max_num=4"
+& nssm install antrea-agent "C:/k/antrea/bin/antrea-agent.exe" "--config=C:/k/antrea/etc/antrea-agent.conf --logtostderr=false --log_dir=c:/var/log/antrea --alsologtostderr --log_file_max_size=100 --log_file_max_num=4"
 & nssm set antrea-agent DependOnService kube-proxy ovs-vswitchd
 & nssm set antrea-agent Start SERVICE_DELAYED_AUTO_START
 
 # Start Services
 start-service kubelet
-# start-service kube-proxy
+start-service kube-proxy
 Write-Output("...sleeping for a second before smoke testing...")
 sleep 5
 

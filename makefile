@@ -34,7 +34,7 @@ all: 0-fetch-k8s 1-build-binaries 2-vagrant-up 3-smoke-test
 	rm -f up joined cni
 
 	echo "installing vagrant vbguest plugin..."
-	vagrant plugin install vagrant-vbguest
+	#vagrant plugin install vagrant-vbguest
 
 	echo "######################################"
 	echo "Retry vagrant up if the first time the windows node failed"
