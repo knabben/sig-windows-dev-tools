@@ -68,6 +68,7 @@ Vagrant.configure(2) do |config|
 
     winw1.winrm.username = "vagrant"
     winw1.winrm.password = "vagrant"
+    winw1.winrm.timeout = 3600
 
     if not File.file?(".lock/joined") then
       # Joining the controlplane

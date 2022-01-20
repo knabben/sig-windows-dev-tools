@@ -82,5 +82,4 @@ C:/ssl.exe /silent /verysilent /sp- /suppressmsgboxes
 # Signing binaries
 Bcdedit.exe -set TESTSIGNING ON
 
-Start-Sleep -s 50
-Restart-Computer
+shutdown /r /t 50
